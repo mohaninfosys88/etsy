@@ -76,7 +76,8 @@ module Etsy
         else
           options = {:fields => 'user_id', :includes => 'Shops'}
           options = options.merge(:access_token => token, :access_secret => secret) if (token && secret)
-          tmp = User.find(username, options)
+          username = username.present? ? username : id
+          tmp =  User.find(username, options)
           @shops = tmp.associated_shops.map { |shop| Shop.new(shop) }
         end
       end
